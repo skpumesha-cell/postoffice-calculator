@@ -16,13 +16,24 @@ jobs:
           python-version: "3.8"
           architecture: "x86"
       - run: pip install -r requirements.txt
-      - run: pyinstaller --onefile --windowed --collect-data docx --name PostOfficeCalculator src/main.py
+      - name: Build app (folder)
+        run: pyinstaller --onedir --windowed --noupx --collect-data docx --name PostOfficeCalculator src/main.py
+      - name: Build debug version (shows errors)
+        run: pyinstaller --onedir --console --noupx --collect-data docx --name PostOfficeDebug src/main.py
+      - name: Zip both
+        run: |
+          Compress-Archive -Path dist/PostOfficeCalculator -DestinationPath PostOfficeCalculator.zip
+          Compress-Archive -Path dist/PostOfficeDebug -DestinationPath PostOfficeDebug.zip
       - uses: actions/upload-artifact@v4
         with:
           name: PostOfficeCalculator
-          path: dist/PostOfficeCalculator.exe
+          path: |
+            PostOfficeCalculator.zip
+            PostOfficeDebug.zip
       - name: Publish release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/PostOfficeCalculator.exe
+          files: |
+            PostOfficeCalculator.zip
+            PostOfficeDebug.zip
