@@ -2,8 +2,9 @@ import datetime
 import os
 import tempfile
 
-from docx import Document
-
+def create_letter(values):
+    from docx import Document
+    doc = Document()
 SECTIONS = [
     ("1. MONTHLY CONTRIBUTIONS & LONG-TERM SCHEMES", [
         ("Monthly Investment Amount", "monthly"),
