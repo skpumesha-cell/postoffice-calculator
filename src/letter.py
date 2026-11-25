@@ -2,8 +2,6 @@ import datetime
 import os
 import tempfile
 
-from docx import Document
-
 SECTIONS = [
     ("1. MONTHLY CONTRIBUTIONS & LONG-TERM SCHEMES", [
         ("Monthly Investment Amount", "monthly"),
@@ -40,6 +38,8 @@ SECTIONS = [
 
 
 def create_letter(values):
+    from docx import Document  # loaded only when the letter is generated
+
     doc = Document()
     doc.add_heading("POST OFFICE INVESTMENT PLAN SUMMARY", level=1)
     doc.add_paragraph("Date: " + datetime.date.today().strftime("%d-%m-%Y"))
