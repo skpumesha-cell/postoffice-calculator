@@ -17,9 +17,9 @@ jobs:
           architecture: "x86"
       - run: pip install -r requirements.txt
       - name: Build app (folder)
-        run: pyinstaller --onedir --windowed --noupx --collect-data docx --name PostOfficeCalculator src/main.py
+        run: pyinstaller --onedir --windowed --noupx --name PostOfficeCalculator src/main.py
       - name: Build debug version (shows errors)
-        run: pyinstaller --onedir --console --noupx --collect-data docx --name PostOfficeDebug src/main.py
+        run: pyinstaller --onedir --console --noupx --name PostOfficeDebug src/main.py
       - name: Zip both
         run: |
           Compress-Archive -Path dist/PostOfficeCalculator -DestinationPath PostOfficeCalculator.zip
