@@ -249,8 +249,8 @@ def create_report(values, logo_uri=""):
             p.append("<tr><td>" + esc(label) + "</td><td class='v'>" + esc(str(val)) + "</td></tr>")
         p.append("</table>")
     p.append("<p>For any further queries, please feel free to reach out.</p>")
-    p.append("<div class='footer'>Designed By: Umesha H N LSGPA, Hassan Division, "
-             "Karnataka 573201<br>Contact: 9449759640 | Email: skpumesha@gmail.com</div>")
+    p.append("<div class='footer'>Post office Investment is very safest and "
+             "guaranteed by the Government of India</div>")
     p.append("</body></html>")
 
     path = os.path.join(tempfile.gettempdir(), "PostOfficeReport.html")
@@ -335,8 +335,8 @@ class App(tk.Tk):
         self.build_right()
         self.build_side()
 
-        tk.Label(self, text="Designed By : Umesha H N LSGPA, Hassan Division, Karnataka 573201\n"
-                            "Contact: 9449759640  eMail : skpumesha@gmail.com",
+        tk.Label(self, text="Designed By: Umesha H N LSGPA, Hassan Division, Karnataka 573201\n"
+                            "Contact: 9449759640 | Email: skpumesha@gmail.com",
                  font=("Segoe UI", 10, "bold"), fg=BLUE, bg=BG, justify="left"
                  ).grid(row=2, column=0, columnspan=3, sticky="w", padx=12, pady=8)
 
