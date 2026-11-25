@@ -1,3 +1,5 @@
+import os
+import sys
 import tkinter as tk
 from tkinter import messagebox
 
@@ -10,6 +12,20 @@ RED = "#cc0000"
 BLUE = "#2a3a9c"
 BROWN = "#7a4a1a"
 FONT = ("Segoe UI", 11)
+
+
+def asset(name):
+    """Find a bundled file (works inside the built app and when run from source)."""
+    here = os.path.dirname(os.path.abspath(__file__))
+    candidates = [
+        os.path.join(getattr(sys, "_MEIPASS", here), "assets", name),
+        os.path.join(here, "..", "assets", name),
+        os.path.join(here, "assets", name),
+    ]
+    for c in candidates:
+        if os.path.exists(c):
+            return c
+    return None
 
 
 def inr(n):
@@ -38,9 +54,26 @@ class App(tk.Tk):
         self.v = {}
         self.joint = tk.BooleanVar(value=False)
 
-        tk.Label(self, text="Postoffice Investment Calculator",
-                 font=("Courier New", 26, "underline"), bg=BG
-                 ).grid(row=0, column=0, columnspan=4, pady=10)
+        # window / taskbar icon
+        ico = asset("icon.ico")
+        if ico:
+            try:
+                self.iconbitmap(ico)
+            except Exception:
+                pass
+
+        # header with logo + title
+        head = tk.Frame(self, bg=BG)
+        head.grid(row=0, column=0, columnspan=4, pady=8)
+        png = asset("logo.png")
+        if png:
+            try:
+                self.logo_img = tk.PhotoImage(file=png)
+                tk.Label(head, image=self.logo_img, bg=BG).pack(side="left", padx=12)
+            except Exception:
+                pass
+        tk.Label(head, text="Postoffice Investment Calculator",
+                 font=("Courier New", 26, "underline"), bg=BG).pack(side="left")
 
         self.left = self.panel("Monthly Contributions", 0)
         self.mid = self.panel("FD Comparison", 1)
@@ -217,11 +250,9 @@ class App(tk.Tk):
             tk.Button(win, text="Save", command=save, width=12, font=FONT
                       ).grid(row=len(entries), column=0, columnspan=3, pady=10)
 
-        def make_letter(self):
+    def make_letter(self):
         values = {k: s.get() for k, s in self.v.items()}
         try:
             letter.create_letter(values)
         except Exception as ex:
             messagebox.showerror("Error", f"Could not open report:\n{ex}")
-            return
-        messagebox.showinfo("Success", f"Letter saved:\n{path}")
