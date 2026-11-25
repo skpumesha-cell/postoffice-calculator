@@ -16,10 +16,12 @@ jobs:
           python-version: "3.8"
           architecture: "x86"
       - run: pip install -r requirements.txt
+      - name: Make logo and icon
+        run: python make_assets.py
       - name: Build app (folder)
-        run: pyinstaller --onedir --windowed --noupx --name PostOfficeCalculator src/main.py
+        run: pyinstaller --onedir --windowed --noupx --paths src --hidden-import ui --hidden-import calculators --hidden-import rates --hidden-import letter --icon assets/icon.ico --add-data "assets/logo.png;assets" --add-data "assets/icon.ico;assets" --name PostOfficeCalculator src/main.py
       - name: Build debug version (shows errors)
-        run: pyinstaller --onedir --console --noupx --name PostOfficeDebug src/main.py
+        run: pyinstaller --onedir --console --noupx --paths src --hidden-import ui --hidden-import calculators --hidden-import rates --hidden-import letter --icon assets/icon.ico --add-data "assets/logo.png;assets" --add-data "assets/icon.ico;assets" --name PostOfficeDebug src/main.py
       - name: Zip both
         run: |
           Compress-Archive -Path dist/PostOfficeCalculator -DestinationPath PostOfficeCalculator.zip
