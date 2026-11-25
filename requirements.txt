@@ -1,2 +1,2 @@
-python-docx
-pyinstaller
+python-docx==1.1.2
+pyinstaller==5.13.2
