@@ -217,11 +217,11 @@ class App(tk.Tk):
             tk.Button(win, text="Save", command=save, width=12, font=FONT
                       ).grid(row=len(entries), column=0, columnspan=3, pady=10)
 
-    def make_letter(self):
+        def make_letter(self):
         values = {k: s.get() for k, s in self.v.items()}
         try:
-            path = letter.create_letter(values)
+            letter.create_letter(values)
         except Exception as ex:
-            messagebox.showerror("Error", f"Could not create letter:\n{ex}")
+            messagebox.showerror("Error", f"Could not open report:\n{ex}")
             return
         messagebox.showinfo("Success", f"Letter saved:\n{path}")
